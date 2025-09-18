@@ -1,0 +1,40 @@
+// Problem Num :- 875
+// Title :- Koko Eating Bananas 
+// Link :- https://leetcode.com/problems/koko-eating-bananas/
+
+
+// Explanation:-
+// This Question is asking about the speed of eating bananas in a hour means how many bananas can koka eat so that he/she can eat all the bananas before the guards came
+// but she/he likes to eat slow and i need to return the  minimum integer k such that she can eat all the bananas within h hours.
+// So fo this question i apply a binary Search concept especiiaaly the search space one as i know that the ans is lie between the min to max no.of bannanas in the piles 
+// so i do the binary search in that search space where my answer is possible everytime i find mid and check whether this mid is my answer or not by passing it through the function called "isItPossible" here basically time is calculated based on the no.of bananas she can eat in a hour and if mid is my answer then i m very much sure that after mid my answer will exist for sure but i need minimum so for this i move my high back to (mid-1) and do rest of the operations and sp on..   
+
+
+       
+
+class Solution {
+    public int minEatingSpeed(int[] piles, int h) {
+        
+        int low = 1;
+        int high = 0;
+        for(int i = 0;i<piles.length;i++)high = Math.max(high,piles[i]);
+
+        while(low<=high){
+            int mid = low+(high-low)/2;
+            if(isItPossible(piles,mid,h)){
+                high = mid-1;
+            }
+            else low = mid+1;
+        }
+        return low;
+    }
+    public static boolean isItPossible(int[] piles,int k,int h){
+
+        long count = 0;
+       for (int i = 0; i < piles.length; i++) {
+          count += (int) (((long)piles[i] + k - 1) / k);//ceil division
+}
+        
+        return count<=(int)h;
+    } 
+}
